@@ -85,8 +85,16 @@ app.post('/api/persons', (request, response)=>{
       })
     }
 
+    // Validación para comprobar si el número ya existe
+    const numberExists = persons.some(p => p.number === person.number);
+    if (numberExists) {
+        return response.status(400).json({
+            error: 'number must be unique'
+        });
+    }
+
     const ids = persons.map(person => person.id)
-    const maxId = Math.max(...ids)
+    const maxId = ids.length > 0 ? Math.max(...ids) : 0;
 
     const newPerson = {
       id: maxId + 1,

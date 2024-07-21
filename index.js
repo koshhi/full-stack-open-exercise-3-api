@@ -73,6 +73,31 @@ app.delete('/api/persons/:id', (req, res) => {
     }
 });
 
+// Ruta para crear una persona
+app.post('/api/persons', (request, response)=>{
+    const person = request.body 
+    //console.log(person)
+
+    //validación de que la persona tiene numero o nombre
+    if (!person || !person.name || !person.number) {
+      return response.status(400).json({
+        error: 'person.number or name are missing'
+      })
+    }
+
+    const ids = persons.map(person => person.id)
+    const maxId = Math.max(...ids)
+
+    const newPerson = {
+      id: maxId + 1,
+      name: person.name,
+      number: person.number,
+    }
+
+    persons = [...persons, newPerson]
+    response.status(201).json(newPerson)
+})
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, ()=>{
 console.log(`Server running on port ${PORT}`);

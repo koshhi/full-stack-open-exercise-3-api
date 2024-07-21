@@ -48,6 +48,17 @@ app.get('/info', (req, res) => {
     `);
 });
 
+// Ruta para obtener la información de una persona por ID
+app.get('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const person = persons.find(person => person.id === id);
+
+    if (person) {
+        res.json(person);
+    } else {
+        res.status(404).send({ error: 'Person not found' });
+    }
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, ()=>{

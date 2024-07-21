@@ -85,11 +85,11 @@ app.post('/api/persons', (request, response)=>{
       })
     }
 
-    // Validación para comprobar si el número ya existe
-    const numberExists = persons.some(p => p.number === person.number);
-    if (numberExists) {
+    // Validación para comprobar si el nombre y número ya existen
+    const entryExists = persons.some(p => p.name === person.name && p.number === person.number);
+    if (entryExists) {
         return response.status(400).json({
-            error: 'number must be unique'
+            error: 'name and number must be unique'
         });
     }
 

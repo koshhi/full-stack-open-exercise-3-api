@@ -60,6 +60,19 @@ app.get('/api/persons/:id', (req, res) => {
     }
 });
 
+// Ruta para eliminar una persona por ID
+app.delete('/api/persons/:id', (req, res) => {
+    const id = Number(req.params.id);
+    const initialLength = persons.length;
+    persons = persons.filter(person => person.id !== id);
+
+    if (persons.length < initialLength) {
+        res.status(204).end(); // 204 No Content si se eliminó
+    } else {
+        res.status(404).send({ error: 'Person not found' });
+    }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, ()=>{
 console.log(`Server running on port ${PORT}`);

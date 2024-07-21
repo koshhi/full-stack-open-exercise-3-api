@@ -32,10 +32,21 @@ let persons = [
     }
 ]
 
+// Ruta para obtener la lista de personas
 app.get('/api/persons', (request, response) => {
     response.json(persons)
 })
 
+// Ruta para obtener la información
+app.get('/info', (req, res) => {
+    const count = persons.length;
+    const currentTime = new Date();
+
+    res.send(`
+        <p>Phonebook has info for ${count} people</p>
+        <p>${currentTime}</p>
+    `);
+});
 
 
 const PORT = process.env.PORT || 3001;
